@@ -1,27 +1,43 @@
 ![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)
 [![forthebadge](https://forthebadge.com/images/badges/open-source.svg)](https://forthebadge.com)
 
+
+<p align="center">
+    <img src="images\poster.gif" alt="healthcare-analytics">
+</p>
 <h2 align="center"> 🏥 Health Analytics Mini Case Study </h2>
 
-![Health Analytics Poster](images/poster.gif)
+<div align="center">
 
-<h3> ✨ Contents </h3>
-##### [🕵️ About ](#about)
-##### [💻 Business Questions](#business-questions) 
-##### [✍️ Contribution](#contribution)
+  [![Status](https://img.shields.io/badge/status-active-success.svg)]()
+  [![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)]() 
+  [![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)]()
+  [![License](https://img.shields.io/badge/license-MIT-blue.svg)]()
+
+</div>
+
+<p align="center"> This is a health analytics mini case study from the <a href="https://www.datawithdanny.com/">Serious SQL</a> course by Danny Ma. The general manager at an healthcare firm has asked us a few questions that they'll like answered.
+    <br> 
+</p>
+
+### ✨ Contents 
+
+ - [🕵️ About ](#about)
+-  [💻 Business Questions](#business-questions) 
+-  [✍️ Contribution](#contribution)
 
 ------
 
 
 
-#### [🕵️ About ]()
+#### 🕵️ About <a name='about'></a>
 
 <p>
 General Manager of Analytics at Health Co. has requested your assitance to  answer some business questions he has which he need to address in today's board meeting by analysing data provided to you about their users. 
 </p>
 
 
-#### [💻 Business Questions ]()
+#### 💻 Business Questions <a name='business-questions'></a>
 
 |Question 1 | How many unique users exists in logs dataset? |
 |--|--|
@@ -266,7 +282,7 @@ WHERE measure = 'blood_pressure';
 | 126 | 79 | 
 
 
-#### [✍️ Contribution ]() 
+#### ✍️ Contribution <a name='contribution'></a>
 
 Assume you are General Manager, What extra queries you might have ? Run your imagination and increase your business, don't worry I am here to analyse your data. 
 
