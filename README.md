@@ -22,9 +22,11 @@
 
 ### ✨ Contents 
 
--  [🕵️ About ](#about)
--  [💻 Business Questions](#business-questions) 
--  [✍️ Contribution](#contribution)
+- [✨ Contents](#-contents)
+  - [🕵️ About <a name='about'></a>](#️-about-)
+  - [💻 Business Questions <a name='business-questions'></a>](#-business-questions-)
+  - [✍️ Contribution <a name='contribution'></a>](#️-contribution-)
+  - [Thank You](#thank-you)
 
 ------
 
@@ -70,8 +72,7 @@ CREATE TEMP TABLE user_measure_count AS (
   SELECT
     id,
     COUNT(*) AS measure_count, 
-    COUNT( DISTINCT measure) AS unique_measure , 
-    SUM( COUNT( DISTINCT measure) ) as total_unique_measure
+    COUNT( DISTINCT measure) AS unique_measure 
   FROM
     health.user_logs
   GROUP BY
@@ -176,34 +177,34 @@ WHERE
 <summary><i>SQL Query</i></summary>
 
 ```sql
-WITH group_by_measure AS (
+
+  WITH measure_with_count AS (
   SELECT
-    DISTINCT id,
-    measure
+    measure,
+    COUNT (DISTINCT id) as frequency
   FROM
     health.user_logs
+  group by
+    measure
 )
 SELECT
   measure,
-  COUNT(*) AS frequency,
-  ROUND (
-    100 * COUNT(*) :: NUMERIC / SUM(COUNT(*)) OVER(),
+  frequency,
+  ROUND(
+    100 * frequency :: NUMERIC / SUM(frequency) OVER() ,
     2
-  ) AS percent
-FROM
-  group_by_measure
-GROUP BY
-  measure
+  )  AS percentage
+from
+  measure_with_count;   
 ```
 
 </details>
 
-| measure | frequency | percent | 
-| -- | -- | -- | 
-| blood_pressure| 123 | 15.22 | 
-| **blood_glucose** | **325** | **40.22** | 
-| weight        | 360 | 44.55 | 
-
+| measure        | frequency | percentage |
+| -------------- | --------- | ----- |
+| **blood_glucose**  | **325**       | **40.22** |
+| blood_pressure | 123       | 15.22 |
+| weight         | 360       | 44.55 |
 
 |Question 7 | number and percentage of the active user base who have at least 2 types of measurements? |
 |--|--|
@@ -215,23 +216,34 @@ GROUP BY
 ```sql
 
 SELECT
-  '2_or_more' AS unique_measure_count , 
-  COUNT(*) AS frequency , 
-  ROUND(100 * COUNT(*) :: NUMERIC / AVG(total_uninque_measure), 2) AS percent 
+  '2_or_more' AS unique_measure_count,
+  SUM(
+    CASE
+      WHEN unique_measure >= 2 THEN 1
+      ELSE 0
+    END
+  ) :: NUMERIC AS frequency,
+  ROUND(
+    100 * SUM(
+      CASE
+        WHEN unique_measure >= 2 THEN 1
+        ELSE 0
+      END
+    ) :: NUMERIC / COUNT(*),
+    2
+  ) AS percentage
 FROM
-  user_measure_count
-WHERE 
-  unique_measure >= 2
+  user_measure_count;
 ```
 
 </details>
 
 
-| unique_measure_count | frequency | percent | 
-| -- | -- | -- | 
-| 2_or_more | 204 | 25.25 | 
+| unique_measure_count | frequency | percentage |
+| -------------------- | --------- | ---------- |
+| 2_or_more            | 204       | 36.82      |
 
-|Question 8 | number and percentage of the active user base who have all 3 measures - blood glucose, weight and blood pressure? |
+|Question 8 | number of the active user base who have all 3 measures - blood glucose, weight and blood pressure? |
 |--|--|
 
 
@@ -244,8 +256,7 @@ WHERE
 
 SELECT
   'All_3' AS unique_measure_count , 
-  COUNT(*) AS frequency , 
-  ROUND(100 * COUNT(*) :: NUMERIC / AVG(total_uninque_measure), 2) AS percent 
+  COUNT(*) AS frequency 
 FROM
   user_measure_count
 WHERE 
@@ -255,9 +266,9 @@ WHERE
 </details>
 
 
-| unique_measure_count | frequency | percent | 
-| -- | -- | -- | 
-| All_3 | 50 | 6.19 | 
+| unique_measure_count | frequency |  
+| -- | -- |
+| All_3 | 50 | 
 
 
 |Question 9 | For users that have blood pressure measurements, What is the median systolic/diastolic blood pressure values? |
